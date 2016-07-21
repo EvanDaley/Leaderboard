@@ -27,6 +27,8 @@ public class WebUtil : MonoBehaviour {
 		pScore = scoreInputField.text;
 		print (pName + " " + pScore);
 
+		echo.text = "Loading scores...";
+
 		buttonSubmit.interactable = false;
 
 		StartCoroutine (UploadScore ());
@@ -67,7 +69,7 @@ public class WebUtil : MonoBehaviour {
 			parseText (w.text);
 			print (w.text);
 
-			echo.text = w.text;
+			echo.text = "";
 		}
 	}
 
