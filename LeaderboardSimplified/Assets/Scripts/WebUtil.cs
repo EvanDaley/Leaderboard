@@ -20,6 +20,8 @@ public class WebUtil : MonoBehaviour {
 
 	public ArrayList listOfScores;
 
+	public GameObject dynamicGrid;
+
 
 	public void SubmitScore()
 	{
@@ -67,7 +69,6 @@ public class WebUtil : MonoBehaviour {
 
 			// read the returned JSON
 			parseText (w.text);
-			print (w.text);
 
 			echo.text = "";
 		}
@@ -76,10 +77,11 @@ public class WebUtil : MonoBehaviour {
 	// parse the JSON returned from the server
 	public void parseText(string text)
 	{
-		// next step: send the scores to the server and echo them back
-		// next step: send the scores to the server, echo them back as json
-		// next step: secho back a list of scores as json
+
+
 	}
+
+
 
 	/// <summary>
 	/// A simple method for validating whether the score to submit is valid. Checks if the score
@@ -92,6 +94,8 @@ public class WebUtil : MonoBehaviour {
 		// tally up the score and if its off by more than 1000 dont post the score
 		return true;
 	}
+
+
 }
 
 
