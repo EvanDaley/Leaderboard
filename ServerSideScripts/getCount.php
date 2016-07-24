@@ -2,8 +2,6 @@
 	include_once("includeMe.php");
 	include_once("log.php");
 
-	$pScore = htmlspecialchars($_GET["pScore"]);
-
 	$mysqli = new mysqli($host, $user , $pw, $db);
 	if ($mysqli->connect_errno) 
 	{
@@ -12,23 +10,24 @@
 	
 	$mysqli->query("SET @newScore = ". "'" . $mysqli->real_escape_string($pScore) . "'");
 	
-	$result = $mysqli->query("CALL GetRank(@newScore)");
+	$result = $mysqli->query("SELECT COUNT(*) as count FROM Leaderboard;");
 	
 	if(!$result)
 	{
-		echo "failed";
-		writeLog("Call to GetAllNames failed");
+		//echo "failed";
+		writeLog("Call to Count failed");
 	}
 	else
 	{
-		writeLog("Call to GetAllNames succeeded");
+		//echo "worked";
+		writeLog("Call to Count succeeded");
 	}
 	
 	if ($result->num_rows > 0) 
-	{
+	{		
 		while($row = $result->fetch_assoc())
 		{
-			echo $row["pRank"];
+			echo $row["count"];
 		}
 	} 
 	else

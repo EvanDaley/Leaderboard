@@ -24,7 +24,7 @@
 	}
 	
 	// Would it be better to create a temporary table and then calculate ranks across the table with a few sql calls?
-	$sql = 'SELECT * FROM Leaderboard ORDER BY pScore DESC';
+	$sql = 'SELECT * FROM Leaderboard ORDER BY pScore DESC LIMIT 5';
 	
 	if(!$results = $mysqli->query($sql))
 	{
@@ -43,13 +43,12 @@
 		while($row = $results->fetch_assoc())
 		{
 			$newScore = $row["pScore"];
-			$url = 'http://evandaley.net/unity/leaderboard/getRank.php?pScore=' . $newScore;
 			$pRank = file_get_contents($url);
 			
 			$entry = array(
 				"pName"=>$row["pName"],
 				"pScore"=>$newScore,
-				"pRank"=>$pRank
+				"pRank"=>"top5"
 			);
 			array_push($summation, $entry);
 		}

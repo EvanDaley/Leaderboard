@@ -10,21 +10,9 @@
 	{
 		echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
-	
-	$sql = $mysqli->prepare("INSERT INTO Leaderboard (pName,pScore) VALUES (?,?)");
-	$sql->bind_param('ss', $pName, $pScore);
 
-	if($sql->execute())
-	{
-		writeLog("Wrote ".$pName." ".$pScore." to database");
-	}
-	else
-	{
-		writeLog("Failed to write ".$pName." ".$pScore." to database");
-	}
-	
 	// Would it be better to create a temporary table and then calculate ranks across the table with a few sql calls?
-	$sql = 'SELECT * FROM Leaderboard ORDER BY pScore DESC';
+	$sql = 'SELECT * FROM Leaderboard ORDER BY pScore ASC LIMIT 3';
 	
 	if(!$results = $mysqli->query($sql))
 	{
@@ -43,13 +31,12 @@
 		while($row = $results->fetch_assoc())
 		{
 			$newScore = $row["pScore"];
-			$url = 'http://evandaley.net/unity/leaderboard/getRank.php?pScore=' . $newScore;
 			$pRank = file_get_contents($url);
 			
 			$entry = array(
 				"pName"=>$row["pName"],
 				"pScore"=>$newScore,
-				"pRank"=>$pRank
+				"pRank"=>"top5"
 			);
 			array_push($summation, $entry);
 		}
