@@ -18,7 +18,7 @@ public class WebUtil : MonoBehaviour {
 	public string gameDuration;
 	public string mapName = "Map1";
 
-	private string leaderboardURLGet = "http://evandaley.net/unity/leaderboard/get.php";
+	private string leaderboardURLGet = "http://evandaley.net/unity/leaderboard/get10.php";
 
 	public ArrayList listOfScores;
 
@@ -75,6 +75,10 @@ public class WebUtil : MonoBehaviour {
 			echo.text = "";
 		}
 	}
+
+
+	//mysql notes
+	//SELECT * FROM `YourTable` ORDER BY YourColumn LIMIT 1
 
 	// parse the JSON returned from the server
 	public void parseText(string text)
