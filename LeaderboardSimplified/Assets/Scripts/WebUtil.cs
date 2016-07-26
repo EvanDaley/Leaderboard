@@ -37,8 +37,13 @@ public class WebUtil : MonoBehaviour {
 
 	public void SubmitScore()
 	{
+<<<<<<< HEAD
 		pName = nameInputField.text;
 		pScore = scoreInputField.text;
+=======
+		// empty leaderboard and indicate that we are loading scores
+		EraseBoard();
+>>>>>>> origin/master
 
 		// empty leaderboard and indicate that we are loading scores
 		EraseBoard();
@@ -49,6 +54,7 @@ public class WebUtil : MonoBehaviour {
 		Invoke ("PopulateBoard", 2f);
 	}
 
+<<<<<<< HEAD
 	IEnumerator PostScore()
 	{
 		// create a web form
@@ -66,6 +72,19 @@ public class WebUtil : MonoBehaviour {
 			//print ("Finished uploading score to " + url);
 			//print ("Result: \n" + w.text);
 		}
+=======
+		// if rank is in top 10: show top 15
+		// use: www form with fields
+		// LOWER: lower=1
+		// UPPER: upper=15
+
+		if(curRank < 10)
+			StartCoroutine(GetScoresInRankRange(1,15));
+		//else
+			
+		// else 
+		// {
+>>>>>>> origin/master
 
 		// check rank
 		StartCoroutine(GetRank());
@@ -77,6 +96,7 @@ public class WebUtil : MonoBehaviour {
 		WWWForm form = new WWWForm();
 		form.AddField ("pScore", pScore);
 
+<<<<<<< HEAD
 		// submit the form
 		string url = leaderboardRank;
 		WWW w = new WWW (url, form);
@@ -97,6 +117,11 @@ public class WebUtil : MonoBehaviour {
 				StartCoroutine(GetScoresInRankRange(curRank - 4, curRank + 15));
 			}
 		}
+=======
+		// }
+
+		// once everything else has finished, display all the data we downloaded
+>>>>>>> origin/master
 	}
 		
 	IEnumerator GetScoresInRankRange(int lowerBound, int upperBound)
