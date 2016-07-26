@@ -36,7 +36,7 @@
 			$entry = array(
 				"pName"=>$row["pName"],
 				"pScore"=>$newScore,
-				"pRank"=>"top5"
+				"pRank"=>$pRank
 			);
 			array_push($summation, $entry);
 		}

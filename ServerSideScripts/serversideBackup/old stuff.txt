@@ -1,0 +1,79 @@
+IEnumerator GetCurrentRank()
+	{
+		// create a web form
+		WWWForm form = new WWWForm();
+		form.AddField ("pName", pName);
+		form.AddField ("pScore", pScore);
+
+		// submit the form
+		string url = leaderboardURLGetRank + "?pScore=" + pScore.ToString();
+		WWW w = new WWW (url, form);
+		yield return w;
+		if (!string.IsNullOrEmpty (w.error)) {
+			print (w.error);
+		} else {
+			print ("Finished downloading top 5 scores from " + url);
+			print ("Rank: " + w.text);
+
+			int.TryParse (w.text, out curRank);
+
+			// create entry
+			CreateEntry(curRank.ToString(), pName, pScore, colorOfMostRecentEntry);
+		}
+
+		// start next sequence
+		StartCoroutine (GetBottomScores ());
+	}
+
+
+	IEnumerator GetBottomScores()
+	{
+		// create a web form
+		WWWForm form = new WWWForm();
+		form.AddField ("pName", pName);
+		form.AddField ("pScore", pScore);
+
+		// submit the form
+		WWW w = new WWW (leaderboardURLGetBottom1, form);
+		yield return w;
+		if (!string.IsNullOrEmpty (w.error)) {
+			print (w.error);
+		} else {
+			print ("Finished downloading top 5 scores from " + leaderboardURLGetBottom1);
+			print (w.text);
+
+			// read the returned JSON
+			ParseBottom3 (w.text);
+		}
+
+		// start next sequence
+	}
+
+	public void ParseBottom3(string text)
+	{
+		// get the last three results and parse them
+		var objList = JsonConvert.DeserializeObject<List<ScoreEntry>> (text);
+
+		int i = count;
+
+		//foreach (var entry in objList)
+
+		for(int j = objList.Count - 1; j > -1; j--)
+		{
+			var entry = objList [j];
+
+			GameObject entryInstance = GameObject.Instantiate (entryPrefab, transform.position, transform.rotation) as GameObject;
+			entryInstance.transform.SetParent (dynamicGrid.transform, false);
+
+			ScoreItem item = entryInstance.GetComponent<ScoreItem> ();
+			item.Initialize (i.ToString(), entry.pName, entry.pScore);
+
+			if(pName == entry.pName)
+				item.SetColor (colorOfPlayersEntries);
+
+			if(pName == entry.pName && pScore == entry.pScore)
+				item.SetColor (colorOfMostRecentEntry);
+
+			entries.Add (entryInstance);
+		}
+	}
