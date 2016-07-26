@@ -37,6 +37,7 @@ public class WebUtil : MonoBehaviour {
 	public void SubmitAndShow()
 	{
 		// empty leaderboard and indicate that we are loading scores
+		EraseBoard();
 
 		// enable UI
 
@@ -48,8 +49,11 @@ public class WebUtil : MonoBehaviour {
 		// use: www form with fields
 		// LOWER: lower=1
 		// UPPER: upper=15
-		StartCoroutine(GetScoresInRankRange(1,5));
 
+		if(curRank < 10)
+			StartCoroutine(GetScoresInRankRange(1,15));
+		//else
+			
 		// else 
 		// {
 
@@ -58,6 +62,8 @@ public class WebUtil : MonoBehaviour {
 		// get 2 before player and 7 after
 
 		// }
+
+		// once everything else has finished, display all the data we downloaded
 	}
 
 	IEnumerator GetScoresInRankRange(int lowerBound, int upperBound)
