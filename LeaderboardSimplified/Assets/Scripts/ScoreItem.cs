@@ -10,11 +10,11 @@ public class ScoreItem : MonoBehaviour {
 
 	public Image backgroundImage;
 
-	public void Initialize(string rank, string pName, string pScore)
+	public void Initialize(string rank, string pName, int pScore)
 	{
 		rankText.text = rank;
 		nameText.text = pName;
-		scoreText.text = pScore;
+		scoreText.text = pScore.ToString();
 	}
 
 	public void SetColor(Color color)

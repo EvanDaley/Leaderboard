@@ -8,9 +8,7 @@
 		echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
 	
-	$mysqli->query("SET @newScore = ". "'" . $mysqli->real_escape_string($pScore) . "'");
-	
-	$result = $mysqli->query("SELECT COUNT(*) as count FROM Leaderboard;");
+	$result = $mysqli->query("CALL CountRecords()");
 	
 	if(!$result)
 	{
